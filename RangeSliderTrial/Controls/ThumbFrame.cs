@@ -1,5 +1,7 @@
-﻿using Android.Content;
+﻿#if ANDROID
+using Android.Content;
 using Android.Views;
+#endif
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using System;
