@@ -695,7 +695,7 @@ namespace RangeSliderTrial.Controls
         }
 
         double GetPanShiftValue(View view)
-            => Device.RuntimePlatform == Device.Android
+            => DeviceInfo.Platform == DevicePlatform.Android
                 ? view.TranslationX
                 : thumbPositionMap[view];
 
