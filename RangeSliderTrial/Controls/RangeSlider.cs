@@ -1,13 +1,5 @@
-﻿using Android.Runtime;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using static System.Math;
-using System.Text;
-using System.Threading.Tasks;
-using static Android.Icu.Text.ListFormatter;
-using static Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.VisualElement;
 using static Microsoft.Maui.Controls.AbsoluteLayout;
 using Microsoft.Maui.Controls.Shapes;
 
@@ -19,31 +11,31 @@ namespace RangeSliderTrial.Controls
 
         const double disabledOpacity = .6;
 
-        [Preserve(Conditional = true)]
+        
         public event EventHandler? ValueChanged;
 
-        [Preserve(Conditional = true)]
+        
         public event EventHandler? LowerValueChanged;
 
-        [Preserve(Conditional = true)]
+        
         public event EventHandler? UpperValueChanged;
 
-        [Preserve(Conditional = true)]
+        
         public event EventHandler? DragStarted;
 
-        [Preserve(Conditional = true)]
+        
         public event EventHandler? LowerDragStarted;
 
-        [Preserve(Conditional = true)]
+        
         public event EventHandler? UpperDragStarted;
 
-        [Preserve(Conditional = true)]
+        
         public event EventHandler? DragCompleted;
 
-        [Preserve(Conditional = true)]
+        
         public event EventHandler? LowerDragCompleted;
 
-        [Preserve(Conditional = true)]
+        
         public event EventHandler? UpperDragCompleted;
 
         public static BindableProperty MinimumValueProperty
@@ -124,17 +116,85 @@ namespace RangeSliderTrial.Controls
         public static BindableProperty ValueLabelSpacingProperty
             = BindableProperty.Create(nameof(ValueLabelSpacing), typeof(double), typeof(RangeSlider), 5.0, propertyChanged: OnLayoutPropertyChanged);
 
-        public static BindableProperty ThumbRadiusProperty
-            = BindableProperty.Create(nameof(ThumbRadius), typeof(double), typeof(RangeSlider), -1.0, propertyChanged: OnLayoutPropertyChanged);
+        //public static BindableProperty ThumbStrokeShapeProperty
+        //    = BindableProperty.Create(nameof(ThumbStrokeShape), typeof(Shape), typeof(RangeSlider), new Rectangle(), propertyChanged: OnLayoutPropertyChanged);
 
-        public static BindableProperty LowerThumbRadiusProperty
-            = BindableProperty.Create(nameof(LowerThumbRadius), typeof(double), typeof(RangeSlider), -1.0, propertyChanged: OnLayoutPropertyChanged);
+        public static BindableProperty LowerThumbStrokeShapeProperty
+            = BindableProperty.Create(nameof(LowerThumbStrokeShape), typeof(Shape), typeof(RangeSlider), new Rectangle(), propertyChanged: OnLayoutPropertyChanged);
 
-        public static BindableProperty UpperThumbRadiusProperty
-            = BindableProperty.Create(nameof(UpperThumbRadius), typeof(double), typeof(RangeSlider), -1.0, propertyChanged: OnLayoutPropertyChanged);
+        public static BindableProperty UpperThumbStrokeShapeProperty
+            = BindableProperty.Create(nameof(UpperThumbStrokeShape), typeof(Shape), typeof(RangeSlider), new Rectangle(), propertyChanged: OnLayoutPropertyChanged);
 
-        public static BindableProperty TrackRadiusProperty
-            = BindableProperty.Create(nameof(TrackRadius), typeof(double), typeof(RangeSlider), -1.0, propertyChanged: OnLayoutPropertyChanged);
+        public static BindableProperty TrackStrokeShapeProperty
+            = BindableProperty.Create(nameof(TrackStrokeShape), typeof(Shape), typeof(RangeSlider), new Rectangle(), propertyChanged: OnLayoutPropertyChanged);
+
+
+
+        public static BindableProperty UpperThumbStrokeThicknessProperty
+            = BindableProperty.Create(nameof(UpperThumbStrokeThickness), typeof(double), typeof(RangeSlider), 0.0, propertyChanged: OnLayoutPropertyChanged);
+
+        public double UpperThumbStrokeThickness
+        {
+            get => (double)GetValue(UpperThumbStrokeThicknessProperty);
+            set => SetValue(UpperThumbStrokeThicknessProperty, value);
+        }
+
+        public static BindableProperty LowerThumbStrokeThicknessProperty
+            = BindableProperty.Create(nameof(LowerThumbStrokeThickness), typeof(double), typeof(RangeSlider), 0.0, propertyChanged: OnLayoutPropertyChanged);
+
+        public double LowerThumbStrokeThickness
+        {
+            get => (double)GetValue(LowerThumbStrokeThicknessProperty);
+            set => SetValue(LowerThumbStrokeThicknessProperty, value);
+        }
+
+        public static BindableProperty TrackStrokeThicknessProperty
+            = BindableProperty.Create(nameof(TrackStrokeThickness), typeof(double), typeof(RangeSlider), 0.0, propertyChanged: OnLayoutPropertyChanged);
+
+        public double TrackStrokeThickness
+        {
+            get => (double)GetValue(TrackStrokeThicknessProperty);
+            set => SetValue(TrackStrokeThicknessProperty, value);
+        }
+
+
+
+        public static BindableProperty UpperThumbShadowProperty
+            = BindableProperty.Create(nameof(UpperThumbShadow), typeof(Shadow), typeof(RangeSlider), null, propertyChanged: OnLayoutPropertyChanged);
+
+        public Shadow UpperThumbShadow
+        {
+            get => (Shadow)GetValue(UpperThumbShadowProperty);
+            set => SetValue(UpperThumbShadowProperty, value);
+        }
+
+        public static BindableProperty LowerThumbShadowProperty
+            = BindableProperty.Create(nameof(LowerThumbShadow), typeof(Shadow), typeof(RangeSlider), null, propertyChanged: OnLayoutPropertyChanged);
+
+        public Shadow LowerThumbShadow
+        {
+            get => (Shadow)GetValue(LowerThumbShadowProperty);
+            set => SetValue(LowerThumbShadowProperty, value);
+        }
+
+        public static BindableProperty TrackShadowProperty
+            = BindableProperty.Create(nameof(TrackShadow), typeof(Shadow), typeof(RangeSlider), null, propertyChanged: OnLayoutPropertyChanged);
+
+        public Shadow TrackShadow
+        {
+            get => (Shadow)GetValue(TrackShadowProperty);
+            set => SetValue(TrackShadowProperty, value);
+        }
+
+        public static BindableProperty TrackHighlightSizeProperty
+            = BindableProperty.Create(nameof(TrackHighlightSize), typeof(double), typeof(RangeSlider), 0.0, propertyChanged: OnLayoutPropertyChanged);
+
+        public double TrackHighlightSize
+        {
+            get => (double)GetValue(TrackHighlightSizeProperty);
+            set => SetValue(TrackHighlightSizeProperty, value);
+        }
+
 
         readonly Dictionary<View, double> thumbPositionMap = new Dictionary<View, double>();
 
@@ -308,41 +368,36 @@ namespace RangeSliderTrial.Controls
             set => SetValue(ValueLabelSpacingProperty, value);
         }
 
-        public double ThumbRadius
+        //public Shape ThumbStrokeShape
+        //{
+        //    get => (Shape)GetValue(ThumbStrokeShapeProperty);
+        //    set => SetValue(ThumbStrokeShapeProperty, value);
+        //}
+        public Shape LowerThumbStrokeShape
         {
-            get => (double)GetValue(ThumbRadiusProperty);
-            set => SetValue(ThumbRadiusProperty, value);
+            get => (Shape)GetValue(LowerThumbStrokeShapeProperty);
+            set => SetValue(LowerThumbStrokeShapeProperty, value);
         }
 
-        public double LowerThumbRadius
+        public Shape UpperThumbStrokeShape
         {
-            get => (double)GetValue(LowerThumbRadiusProperty);
-            set => SetValue(LowerThumbRadiusProperty, value);
+            get => (Shape)GetValue(UpperThumbStrokeShapeProperty);
+            set => SetValue(UpperThumbStrokeShapeProperty, value);
         }
 
-        public double UpperThumbRadius
+        public Shape TrackStrokeShape
         {
-            get => (double)GetValue(UpperThumbRadiusProperty);
-            set => SetValue(UpperThumbRadiusProperty, value);
+            get => (Shape)GetValue(TrackStrokeShapeProperty);
+            set => SetValue(TrackStrokeShapeProperty, value);
         }
 
-        public double TrackRadius
-        {
-            get => (double)GetValue(TrackRadiusProperty);
-            set => SetValue(TrackRadiusProperty, value);
-        }
+        Border Track { get; } = CreateBorderElement<Border>();
 
-        static bool IsThumbShadowSupported
-            => DeviceInfo.Platform == DevicePlatform.iOS
-            || DeviceInfo.Platform == DevicePlatform.macOS;
+        Border TrackHighlight { get; } = CreateBorderElement<Border>();
 
-        Frame Track { get; } = CreateFrameElement<Frame>();
+        Border LowerThumb { get; } = CreateBorderElement<ThumbBorder>();
 
-        Frame TrackHighlight { get; } = CreateFrameElement<Frame>();
-
-        Frame LowerThumb { get; } = CreateFrameElement<ThumbFrame>(IsThumbShadowSupported);
-
-        Frame UpperThumb { get; } = CreateFrameElement<ThumbFrame>(IsThumbShadowSupported);
+        Border UpperThumb { get; } = CreateBorderElement<ThumbBorder>();
 
         Label LowerValueLabel { get; } = CreateLabelElement();
 
@@ -400,33 +455,14 @@ namespace RangeSliderTrial.Controls
             OnLayoutPropertyChanged();
         }
 
-        static Frame CreateFrameElement<TFrame>(bool hasShadow = false) where TFrame : Frame, new()
+        static Border CreateBorderElement<TBorder>() where TBorder : Border, new()
         {
-            var frame = new TFrame
+            var Border = new TBorder
             {
-                Padding = 0,
-                HasShadow = false,
-                IsClippedToBounds = true
+                Padding = 0
             };
 
-            if (hasShadow)
-            {
-                //ShadowEffect.SetColor(frame, Color.Black);
-                //ShadowEffect.SetOpacity(frame, .25);
-                //ShadowEffect.SetRadius(frame, 3);
-                //ShadowEffect.SetOffsetY(frame, 2);
-
-                Shadow shadow = new Shadow()
-                {
-                    Brush = new SolidColorBrush(Colors.Black),
-                    Opacity = 0.25f,
-                    Radius = 3,
-                    Offset = new Point(0, 2)
-                };
-                frame.Shadow = shadow;
-            }
-
-            return frame;
+            return Border;
         }
 
         static Label CreateLabelElement()
@@ -518,30 +554,35 @@ namespace RangeSliderTrial.Controls
             var upperThumbColor = GetColorOrDefault(UpperThumbColor, ThumbColor);
             var lowerThumbBorderColor = GetColorOrDefault(LowerThumbBorderColor, ThumbBorderColor);
             var upperThumbBorderColor = GetColorOrDefault(UpperThumbBorderColor, ThumbBorderColor);
-            if (!IsThumbShadowSupported)
-            {
-                var defaultThumbColor = Color.FromRgb(182, 182, 182);
-                lowerThumbBorderColor = GetColorOrDefault(lowerThumbBorderColor, defaultThumbColor);
-                upperThumbBorderColor = GetColorOrDefault(upperThumbBorderColor, defaultThumbColor);
-            }
 
-            LowerThumb.BorderColor = lowerThumbBorderColor;
-            UpperThumb.BorderColor = upperThumbBorderColor;
+            LowerThumb.Stroke = lowerThumbBorderColor;
+            UpperThumb.Stroke = upperThumbBorderColor;
             LowerThumb.BackgroundColor = GetColorOrDefault(lowerThumbColor, Colors.White);
             UpperThumb.BackgroundColor = GetColorOrDefault(upperThumbColor, Colors.White);
             Track.BackgroundColor = GetColorOrDefault(TrackColor, Color.FromRgb(182, 182, 182));
             TrackHighlight.BackgroundColor = GetColorOrDefault(TrackHighlightColor, Color.FromRgb(46, 124, 246));
-            Track.BorderColor = GetColorOrDefault(TrackBorderColor, Colors.Gray);
-            TrackHighlight.BorderColor = GetColorOrDefault(TrackHighlightBorderColor, Colors.Gray);
+            Track.Stroke = GetColorOrDefault(TrackBorderColor, Colors.Gray);
+            TrackHighlight.Stroke = GetColorOrDefault(TrackHighlightBorderColor, Colors.Gray);
 
             var trackSize = TrackSize;
-            var trackRadius = (float)GetDoubleOrDefault(TrackRadius, trackSize / 2);
+            //var trackRadius = (float)GetDoubleOrDefault(TrackRadius, trackSize / 2);
             var lowerThumbSize = GetDoubleOrDefault(LowerThumbSize, ThumbSize);
             var upperThumbSize = GetDoubleOrDefault(UpperThumbSize, ThumbSize);
-            Track.CornerRadius = trackRadius;
-            TrackHighlight.CornerRadius = trackRadius;
-            LowerThumb.CornerRadius = (float)GetDoubleOrDefault(GetDoubleOrDefault(LowerThumbRadius, ThumbRadius), lowerThumbSize / 2);
-            UpperThumb.CornerRadius = (float)GetDoubleOrDefault(GetDoubleOrDefault(UpperThumbRadius, ThumbRadius), upperThumbSize / 2);
+            Track.StrokeShape = TrackStrokeShape;
+            TrackHighlight.StrokeShape = TrackStrokeShape;
+
+            LowerThumb.StrokeShape = LowerThumbStrokeShape;
+            UpperThumb.StrokeShape = UpperThumbStrokeShape;
+
+            Track.StrokeThickness = TrackStrokeThickness;
+            UpperThumb.StrokeThickness = UpperThumbStrokeThickness;
+            LowerThumb.StrokeThickness = LowerThumbStrokeThickness;
+
+
+            LowerThumb.Shadow = LowerThumbShadow;
+            Track.Shadow = TrackShadow;
+            UpperThumb.Shadow = UpperThumbShadow;
+
 
             LowerThumb.Content = LowerThumbView;
             UpperThumb.Content = UpperThumbView;
@@ -558,8 +599,12 @@ namespace RangeSliderTrial.Controls
             if (Control != null)
                 Control.HeightRequest = labelWithSpacingHeight + trackThumbHeight;
 
+            var trackHighlightSize = TrackHighlightSize > 0 ? TrackHighlightSize : trackSize;
+
+            var highlightTrackVerticalPosition = trackVerticalPosition + (trackSize - trackHighlightSize) / 2;
+
             var trackHighlightBounds = GetLayoutBounds(TrackHighlight);
-            SetLayoutBounds(TrackHighlight, new Rect(trackHighlightBounds.X, trackVerticalPosition, trackHighlightBounds.Width, trackSize));
+            SetLayoutBounds(TrackHighlight, new Rect(trackHighlightBounds.X, highlightTrackVerticalPosition, trackHighlightBounds.Width, trackHighlightSize));
             SetLayoutBounds(Track, new Rect(0, trackVerticalPosition, Width, trackSize));
             SetLayoutBounds(LowerThumb, new Rect(0, lowerThumbVerticalPosition, lowerThumbSize, lowerThumbSize));
             SetLayoutBounds(UpperThumb, new Rect(0, upperThumbVerticalPosition, upperThumbSize, upperThumbSize));

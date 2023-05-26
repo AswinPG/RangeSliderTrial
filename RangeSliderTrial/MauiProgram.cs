@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using RangeSliderTrial.Controls;
 
 namespace RangeSliderTrial;
 
@@ -9,6 +10,10 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
+			.ConfigureMauiHandlers((handlers) =>
+			{
+				handlers.AddHandler(typeof(ThumbBorder),typeof(ThumbBorderHandler));
+			})
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

@@ -5,43 +5,72 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:range="clr-namespace:RangeSliderTrial.Controls">
 
-    <!--<ScrollView>-->
-    <VerticalStackLayout
-        Padding="30,0"
-        Spacing="25"
-        VerticalOptions="Center">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Shadow
+                x:Key="MainShadow"
+                Brush="Red"
+                Opacity="1"
+                Radius="30"
+                Offset="2,2" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25"
+            VerticalOptions="Center">
 
-        <Image
-            HeightRequest="200"
-            HorizontalOptions="Center"
-            SemanticProperties.Description="Cute dot net bot waving hi to you!"
-            Source="dotnet_bot.png" />
+            <Image
+                HeightRequest="200"
+                HorizontalOptions="Center"
+                SemanticProperties.Description="Cute dot net bot waving hi to you!"
+                Source="dotnet_bot.png" />
 
-        <Label
-            FontSize="32"
-            HorizontalOptions="Center"
-            SemanticProperties.HeadingLevel="Level1"
-            Text="Hello, World!" />
+            <Label
+                FontSize="32"
+                HorizontalOptions="Center"
+                SemanticProperties.HeadingLevel="Level1"
+                Text="Hello, World!" />
 
-        <range:RangeSlider />
+            <range:RangeSlider
+                LowerThumbColor="Transparent"
+                LowerThumbShadow="{StaticResource MainShadow}"
+                TrackColor="Green"
+                TrackHighlightBorderColor="Purple"
+                TrackHighlightColor="Yellow"
+                TrackHighlightSize="20"
+                TrackShadow="{StaticResource MainShadow}"
+                TrackSize="30"
+                UpperThumbBorderColor="Red"
+                UpperThumbShadow="{StaticResource MainShadow}"
+                UpperThumbSize="50"
+                UpperThumbStrokeThickness="2">
+                <range:RangeSlider.LowerThumbStrokeShape>
+                    <RoundRectangle CornerRadius="50" />
+                </range:RangeSlider.LowerThumbStrokeShape>
+                <range:RangeSlider.TrackStrokeShape>
+                    <RoundRectangle CornerRadius="15" />
+                </range:RangeSlider.TrackStrokeShape>
+            </range:RangeSlider>
 
-        <Label
-            FontSize="18"
-            HorizontalOptions="Center"
-            SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-            SemanticProperties.HeadingLevel="Level2"
-            Text="Welcome to .NET Multi-platform App UI" />
+            <Label
+                FontSize="18"
+                HorizontalOptions="Center"
+                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
+                SemanticProperties.HeadingLevel="Level2"
+                Text="Welcome to .NET Multi-platform App UI" />
 
-        <Button
-            x:Name="CounterBtn"
-            Clicked="OnCounterClicked"
-            HorizontalOptions="Center"
-            SemanticProperties.Hint="Counts the number of times you click"
-            Text="Click me" />
+            <Button
+                x:Name="CounterBtn"
+                Clicked="OnCounterClicked"
+                HorizontalOptions="Center"
+                SemanticProperties.Hint="Counts the number of times you click"
+                Text="Click me" />
 
+            <BoxView HeightRequest="700" />
 
-
-    </VerticalStackLayout>
-    <!--</ScrollView>-->
+        </VerticalStackLayout>
+    </ScrollView>
 
 </ContentPage>
